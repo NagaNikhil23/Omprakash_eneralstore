@@ -37,9 +37,9 @@ public class LoginActivity extends AppCompatActivity {
         loginViewModel = ViewModelProviders.of(this, new LoginViewModelFactory())
                 .get(LoginViewModel.class);
 
-        final EditText usernameEditText = findViewById(R.id.phonenumber);
-        final EditText passwordEditText = findViewById(R.id.otp);
-        final Button loginButton = findViewById(R.id.login);
+        final EditText phonenumberET = findViewById(R.id.phonenumber);
+        final EditText otpET = findViewById(R.id.otp);
+        final Button signinBT = findViewById(R.id.login);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
 
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
@@ -48,12 +48,12 @@ public class LoginActivity extends AppCompatActivity {
                 if (loginFormState == null) {
                     return;
                 }
-                loginButton.setEnabled(loginFormState.isDataValid());
-                if (loginFormState.getUsernameError() != null) {
-                    usernameEditText.setError(getString(loginFormState.getUsernameError()));
+                signinBT.setEnabled(loginFormState.isDataValid());
+                if (loginFormState.getPhoneError() != null) {
+                    phonenumberET.setError(getString(loginFormState.getPhoneError()));
                 }
-                if (loginFormState.getPasswordError() != null) {
-                    passwordEditText.setError(getString(loginFormState.getPasswordError()));
+                if (loginFormState.getOtpError() != null) {
+                    otpET.setError(getString(loginFormState.getOtpError()));
                 }
             }
         });
@@ -69,13 +69,13 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(usernameEditText.getText().toString(),
-                        passwordEditText.getText().toString());
+                loginViewModel.loginDataChanged(phonenumberET.getText().toString(),
+                        otpET.getText().toString());
             }
         };
-        usernameEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.addTextChangedListener(afterTextChangedListener);
-        passwordEditText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+        phonenumberET.addTextChangedListener(afterTextChangedListener);
+        otpET.addTextChangedListener(afterTextChangedListener);
+        otpET.setOnEditorActionListener(new TextView.OnEditorActionListener() {
 
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -86,7 +86,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
+        signinBT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 loadingProgressBar.setVisibility(View.VISIBLE);
@@ -96,7 +96,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void updateUiWithUser() {
-
         // TODO : initiate successful logged in experience
         Toast.makeText(getApplicationContext(), "welcome", Toast.LENGTH_LONG).show();
     }
