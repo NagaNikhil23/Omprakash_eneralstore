@@ -18,30 +18,30 @@ public class LoginViewModel extends ViewModel {
         return loginFormState;
     }
 
-    public void loginDataChanged(String username, String password) {
-        if (!isUserNameValid(username)) {
-            loginFormState.setValue(new LoginFormState(R.string.invalid_username, null));
-        } else if (!isPasswordValid(password)) {
-            loginFormState.setValue(new LoginFormState(null, R.string.invalid_password));
+    public void loginDataChanged(String phone, String otp) {
+        if (!isPhoneValid(phone)) {
+            loginFormState.setValue(new LoginFormState(R.string.invalid_phone_number, null));
+        } else if (!isOtpValid(otp)) {
+            loginFormState.setValue(new LoginFormState(null, R.string.invalid_otp));
         } else {
             loginFormState.setValue(new LoginFormState(true));
         }
     }
 
     // A placeholder username validation check
-    private boolean isUserNameValid(String username) {
-        if (username == null) {
+    private boolean isPhoneValid(String phone) {
+        if (phone == null) {
             return false;
         }
-        if (username.contains("@")) {
-            return Patterns.EMAIL_ADDRESS.matcher(username).matches();
+        if (phone.matches("^[0-9]+$")) {
+            return Patterns.PHONE.matcher(phone).matches();
         } else {
-            return !username.trim().isEmpty();
+            return !phone.trim().isEmpty();
         }
     }
 
     // A placeholder password validation check
-    private boolean isPasswordValid(String password) {
-        return password != null && password.trim().length() > 5;
+    private boolean isOtpValid(String otp) {
+        return otp != null && otp.trim().length() > 5;
     }
 }
