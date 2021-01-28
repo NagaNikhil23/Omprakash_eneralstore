@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_view_products">
+
+    <fragment
+        android:id="@+id/navigation_profile"
+        android:name="com.delivery.generalstore.ui.profile.ProfileFragment"
+        android:label="@string/title_profile"
+        tools:layout="@layout/fragment_home" />
+
+    <fragment
+        android:id="@+id/navigation_view_products"
+        android:name="com.delivery.generalstore.ui.view_products.ViewProductsFragment"
+        android:label="@string/title_view_products"
+        tools:layout="@layout/fragment_dashboard" />
+
+    <fragment
+        android:id="@+id/navigation_my_orders"
+        android:name="com.delivery.generalstore.ui.my_orders.MyOrdersFragment"
+        android:label="@string/title_my_orders"
+        tools:layout="@layout/fragment_notifications" />
+</navigation>
