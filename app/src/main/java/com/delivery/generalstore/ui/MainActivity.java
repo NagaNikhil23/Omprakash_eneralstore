@@ -1,6 +1,10 @@
 package com.delivery.generalstore.ui;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -28,4 +32,19 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupWithNavController(navView, navController);
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.cart_menu, menu);
+        return true;
+    }
+
+    public void onMenuItemClickMethod(MenuItem menuItem) {
+        Log.e("in menu item", menuItem.toString());
+        if (menuItem.getItemId() == R.id.action_cart) {
+            Log.e("in Cart", menuItem.toString());
+            // Do stuff here
+            Toast.makeText(getApplicationContext(),"Cart Page still under construction",Toast.LENGTH_LONG).show();
+        }
+    }
 }

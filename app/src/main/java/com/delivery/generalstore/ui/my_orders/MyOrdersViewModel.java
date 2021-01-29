@@ -10,7 +10,7 @@ public class MyOrdersViewModel extends ViewModel {
 
     public MyOrdersViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+        mText.setValue("MyOrders Page is under construction");
     }
 
     public LiveData<String> getText() {
