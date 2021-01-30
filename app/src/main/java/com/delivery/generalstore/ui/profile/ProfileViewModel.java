@@ -10,10 +10,14 @@ public class ProfileViewModel extends ViewModel {
 
     public ProfileViewModel() {
         mText = new MutableLiveData<>();
-        mText.setValue("Profile Page is under construction");
+        mText.setValue("Getting profile details");
     }
 
     public LiveData<String> getText() {
         return mText;
+    }
+
+    public void setdetails(String name, String email, String phone) {
+        mText.setValue("Name: "+name + "\n Email: "+email+ "\n Phone: "+phone);
     }
 }

@@ -44,7 +44,11 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -52,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
     private LoginViewModel loginViewModel;
     private String mVerificationId;
     FirebaseAuth mAuth;
+    FirebaseFirestore db;
 
     private PhoneAuthProvider.ForceResendingToken mResendToken;
 
@@ -63,11 +68,14 @@ public class LoginActivity extends AppCompatActivity {
                 .get(LoginViewModel.class);
 
         final EditText phonenumberET = findViewById(R.id.phonenumber);
+        final EditText nameET = findViewById(R.id.name);
+        final EditText emailET = findViewById(R.id.email);
         final EditText otpET = findViewById(R.id.otp);
         final Button signinBT = findViewById(R.id.login);
         final Button generateOtpBT = findViewById(R.id.generate_otp);
         final ProgressBar loadingProgressBar = findViewById(R.id.loading);
         mAuth = FirebaseAuth.getInstance();
+        db= FirebaseFirestore.getInstance();
         loginViewModel.getLoginFormState().observe(this, new Observer<LoginFormState>() {
             @Override
             public void onChanged(@Nullable LoginFormState loginFormState) {
@@ -75,13 +83,19 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 signinBT.setEnabled(loginFormState.isDataValid());
+                if (loginFormState.getNameError() != null) {
+                    nameET.setError(getString(loginFormState.getNameError()));
+                }
+                if (loginFormState.getEmailError() != null) {
+                    emailET.setError(getString(loginFormState.getEmailError()));
+                }
                 if (loginFormState.getPhoneError() != null) {
                     phonenumberET.setError(getString(loginFormState.getPhoneError()));
                 }
                 if (loginFormState.getOtpError() != null) {
                     otpET.setError(getString(loginFormState.getOtpError()));
                 }
-                if(loginFormState.getPhoneError() == null){
+                if(loginFormState.getPhoneError() == null && loginFormState.getNameError() == null && loginFormState.getEmailError() == null){
                     generateOtpBT.setEnabled(true);
                 }
             }
@@ -98,7 +112,7 @@ public class LoginActivity extends AppCompatActivity {
             }
             @Override
             public void afterTextChanged(Editable s) {
-                loginViewModel.loginDataChanged(phonenumberET.getText().toString(),
+                loginViewModel.loginDataChanged(nameET.getText().toString(),emailET.getText().toString(),phonenumberET.getText().toString(),
                         otpET.getText().toString());
             }
         };
@@ -150,6 +164,9 @@ public class LoginActivity extends AppCompatActivity {
                 otpET.setVisibility(View.VISIBLE);
                 generateOtpBT.setVisibility(View.INVISIBLE);
                 signinBT.setVisibility(View.VISIBLE);
+                nameET.setEnabled(false);
+                emailET.setEnabled(false);
+                phonenumberET.setEnabled(false);
                 loadingProgressBar.setVisibility(View.INVISIBLE);
             }
         };
@@ -176,7 +193,7 @@ public class LoginActivity extends AppCompatActivity {
                     @Override
                     public void onSuccess(AuthResult authResult) {
                         FirebaseUser userdetails=mAuth.getCurrentUser();
-                        updateUiWithUser(userdetails);
+                        createuser_in_cloud_db(nameET.getText().toString(),emailET.getText().toString(),userdetails);
                         Log.d("on","Auth success");
                     }
                 }).addOnFailureListener(new OnFailureListener() {
@@ -204,6 +221,38 @@ public class LoginActivity extends AppCompatActivity {
         }
         else{
             Toast.makeText(getApplicationContext(), "Please enter your details to Login",Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void createuser_in_cloud_db(final String name, String email, final FirebaseUser user){
+
+        // Creating data(Map variable) to store in firebase
+        Map<String, Object> data=new HashMap<>();
+        data.put("Email",email);
+        data.put("Phone", user.getPhoneNumber());
+        data.put("Name", name);
+        data.put("User ID",user.getUid());
+
+        if(db==null){
+            Log.e("In create user", "db is getting null");
+        }
+        else {
+            Log.e("In Create User", user.getPhoneNumber()+"@generalstore");
+            DocumentReference user_doc_ref = db.collection("users").document(user.getPhoneNumber()+"@generalstore");
+            user_doc_ref.set(data)
+                    .addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Log.e("In Create user", "Added user details");
+                            updateUiWithUser(user);
+                        }
+                    })
+                    .addOnFailureListener(new OnFailureListener() {
+                        @Override
+                        public void onFailure(@NonNull Exception e) {
+                            Log.e("In Create user", "Failed"+e);
+                        }
+                    });
         }
     }
 
