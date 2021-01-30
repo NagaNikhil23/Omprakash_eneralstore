@@ -33,10 +33,8 @@ public class LoginViewModel extends ViewModel {
         if (phone == null) {
             return false;
         }
-        if (phone.matches("^[0-9]+$")) {
-            return Patterns.PHONE.matcher(phone).matches();
-        } else {
-            return !phone.trim().isEmpty();
+        else {
+            return phone.trim().length() == 10 && Patterns.PHONE.matcher(phone).matches();
         }
     }
 

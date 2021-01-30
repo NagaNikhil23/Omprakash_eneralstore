@@ -4,6 +4,7 @@
     <string name="prompt_email">Email</string>
     <string name="prompt_password">Password</string>
     <string name="prompt_phone">Phone Number</string>
+    <string name="prompt_Name">Name</string>
     <string name="prompt_otp">OTP (Sent to your phone number)</string>
     <string name="action_sign_in">Sign in or register</string>
     <string name="action_sign_in_short">Sign in</string>
@@ -14,4 +15,8 @@
     <string name="invalid_phone_number">Phone number is Invalid.</string>
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_view_products">View Products</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_my_orders">My Orders</string>
 </resources>
