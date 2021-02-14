@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.delivery.generalstore.R;
 import com.delivery.generalstore.ui.my_orders.MyOrdersViewModel;
@@ -39,6 +40,7 @@ public class CartFragment extends Fragment {
     private DatabaseReference mDatabase;
     private FirebaseFirestore db ;
     ListView listView;
+    TextView total_cart_price;
 
     public static CartFragment newInstance() {
         return new CartFragment();
@@ -58,8 +60,9 @@ public class CartFragment extends Fragment {
                              @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.cart_fragment, container, false);
         mViewModel= ViewModelProviders.of(this).get(CartViewModel.class);
-
+        total_cart_price=(TextView)view.findViewById(R.id.price_value);
         listView=(ListView)view.findViewById(R.id.listview);
+
 
         mViewModel.getText().observe(getViewLifecycleOwner(), new Observer<List<Map<String, Object>>>() {
             @Override
@@ -68,6 +71,14 @@ public class CartFragment extends Fragment {
                 CartItemsLayoutAdapter adapter=new CartItemsLayoutAdapter(getActivity(),list);
                 Log.e("list",list.toString());
                 listView.setAdapter(adapter);
+            }
+        });
+
+        mViewModel.getTotalCartPrice().observe(getViewLifecycleOwner(), new Observer<Long>() {
+            @Override
+            public void onChanged(Long aLong) {
+                Log.e("Total_cart_price",aLong.toString());
+                total_cart_price.setText(aLong.toString());
             }
         });
 

@@ -27,10 +27,13 @@ public class CartViewModel extends ViewModel {
     private MutableLiveData<List<Map<String,Object>>> products;
     private List<Map<String,Object>> products_list;
     FirebaseFirestore db ;
+    private Long cart_total_price= Long.valueOf(0);
+    private MutableLiveData<Long> mTotalPrice;
 
     public CartViewModel() {
         products = new MutableLiveData<>();
         products_list=new ArrayList<>();
+        mTotalPrice=new MutableLiveData<>();
         products.setValue(products_list);
         db=FirebaseFirestore.getInstance();
     }
@@ -59,6 +62,7 @@ public class CartViewModel extends ViewModel {
                                     products_list.add(product_details);
                                     Log.d("In CartViewModel","All product details added");
                                     products.setValue(products_list);
+                                    updateTotalPrice();
                                 }
                             });
             }
@@ -74,4 +78,18 @@ public class CartViewModel extends ViewModel {
                 return products;
     }
     // TODO: Implement the ViewModel
+
+    public LiveData<Long> getTotalCartPrice(){
+        return mTotalPrice;
+    }
+
+    public void  updateTotalPrice() {
+        cart_total_price= Long.valueOf(0);
+        for(Map<String,Object> item:products_list){
+            Long total_unit_price=Long.parseLong(item.get("Price").toString()) * Long.parseLong(item.get("Count").toString());
+            cart_total_price+=total_unit_price;
+        }
+        Log.e("total price",cart_total_price+"");
+        mTotalPrice.setValue(cart_total_price);
+    }
 }
