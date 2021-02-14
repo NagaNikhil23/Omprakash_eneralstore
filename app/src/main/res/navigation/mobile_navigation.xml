@@ -22,4 +22,11 @@
         android:name="com.delivery.generalstore.ui.my_orders.MyOrdersFragment"
         android:label="@string/title_my_orders"
         tools:layout="@layout/fragment_my_orders" />
+
+    <fragment
+        android:id="@+id/navigation_cart"
+        android:name="com.delivery.generalstore.ui.cart.CartFragment"
+        android:label="@string/title_cart"
+        tools:layout="@layout/cart_fragment" />
+
 </navigation>

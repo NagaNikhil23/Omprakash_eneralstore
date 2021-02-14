@@ -17,6 +17,7 @@ import com.delivery.generalstore.R;
 
 public class MainActivity extends AppCompatActivity {
 
+    NavController navController;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         AppBarConfiguration appBarConfiguration = new AppBarConfiguration.Builder(
                 R.id.navigation_profile, R.id.navigation_view_products, R.id.navigation_my_orders)
                 .build();
-        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
+        navController= Navigation.findNavController(this, R.id.nav_host_fragment);
         NavigationUI.setupActionBarWithNavController(this, navController, appBarConfiguration);
         NavigationUI.setupWithNavController(navView, navController);
     }
@@ -44,7 +45,8 @@ public class MainActivity extends AppCompatActivity {
         if (menuItem.getItemId() == R.id.action_cart) {
             Log.e("in Cart", menuItem.toString());
             // Do stuff here
-            Toast.makeText(getApplicationContext(),"Cart Page still under construction",Toast.LENGTH_LONG).show();
+            navController.navigate(R.id.navigation_cart);
+           // Toast.makeText(getApplicationContext(),"Cart Page still under construction",Toast.LENGTH_LONG).show();
         }
     }
 }
