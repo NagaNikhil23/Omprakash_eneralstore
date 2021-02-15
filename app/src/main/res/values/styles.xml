@@ -7,4 +7,22 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="button">
+        <item name="android:textColor">@color/Dark_Color</item>
+        <item name="fontFamily">@font/amaranth_bold</item>
+        <item name="android:textSize">18dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/button_border</item>
+    </style>
+
+    <style name="edittext">
+        <item name="android:textColor">@color/Dark_Color</item>
+        <item name="android:fontFamily">@font/jacques_francois</item>
+    </style>
+
+    <style name="textview">
+        <item name="android:textColor">@color/Dark_Color</item>
+        <item name="android:fontFamily">@font/quando</item>
+    </style>
+
 </resources>
