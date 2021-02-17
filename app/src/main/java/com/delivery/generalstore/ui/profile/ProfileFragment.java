@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +99,7 @@ public class ProfileFragment extends Fragment {
                 dialogname.setText("Add Address");
                 dialogname.setTextColor(Color.parseColor("#008040"));
                 dialogname.setTextSize(20);
+                dialogname.setGravity(Gravity.CENTER);
                 layout.addView(dialogname);
 
                 final EditText etName = new EditText(getContext());
@@ -154,7 +156,6 @@ public class ProfileFragment extends Fragment {
                 alert.show();
             }
         });
-
         return root;
     }
 

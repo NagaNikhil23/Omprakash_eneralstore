@@ -21,4 +21,6 @@
     <string name="title_profile">Profile</string>
     <string name="title_cart">Cart</string>
     <string name="title_my_orders">My Orders</string>
+    <string name="min_date">10/20/2020</string>
+
 </resources>

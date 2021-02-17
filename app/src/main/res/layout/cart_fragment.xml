@@ -36,8 +36,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
-            android:numColumns="2"
+            android:layout_weight="5"
             android:verticalSpacing="5dp" />
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:visibility="visible"
+            android:id="@+id/place_order"
+            style="@style/button"
+            android:text="Place Order"
+            tools:ignore="MissingConstraints" />
     </LinearLayout>
     <ProgressBar
         android:id="@+id/progressbar"

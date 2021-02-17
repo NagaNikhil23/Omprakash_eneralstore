@@ -92,4 +92,6 @@ public class CartViewModel extends ViewModel {
         Log.e("total price",cart_total_price+"");
         mTotalPrice.setValue(cart_total_price);
     }
+
+
 }
